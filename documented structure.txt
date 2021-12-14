@@ -1,6 +1,6 @@
 Lex-Atrium's  Code Structure
 
-Django separates different aspects (using the Model-View-Controller design pattern)of the code into applications that have all the files necessary to standalone.ggg
+Django separates different aspects (using the Model-View-Controller design pattern) of the code into applications that have all the files necessary to standalone.ggg
 
 
 
