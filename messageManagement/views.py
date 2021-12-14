@@ -56,7 +56,7 @@ def message_view(request):
     # end
     # gets a particular user id from a database
     userObj = User.objects.get(pk=user)
-    # gets all case messages iin descending order
+    # gets all case messages in descending order
     msgObj = Message.objects.all().order_by('-id')
     # return message web page
     return render(request, "message.html", {
