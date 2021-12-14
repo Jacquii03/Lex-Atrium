@@ -130,7 +130,7 @@ def login(request):
 
 # signs out the current user
 def logout_view(request):
-    # removees the logged in user from the session//cookie
+    # removes the logged in user from the session//cookie
     if "user" in request.session:
         del request.session['user']
     logout(request)
@@ -215,7 +215,7 @@ def settings(request):
 #             email = request.POST.get('email')
 #             token = generateOTP()
 
-#             send_mail("Reset password on Lex Atrium",f'your password token is {token}','francisohis@gmail.com',[email])
+#             send_mail("Reset password on Lex-Atrium",f'your password token is {token}','ijeomaakwiwu@gmail.com',[email])
 #             ForgotPassword(email=email, token=token).save()
 #             return redirect("/forgot^password/")
 #     return render(request, "account/forgotEmail.html", {})
