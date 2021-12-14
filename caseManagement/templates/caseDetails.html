@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Lex Atrium</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <link href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}' rel="stylesheet">
+    <link href='{% static "vendor/boxicons/css/boxicons.min.css" %}' rel="stylesheet">
+
+    <link href='{% static "css/dashboard.css"  %}' rel="stylesheet">
+
+
+
+
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="#" class="logo d-flex align-items-center">
+                <span class="d-none d-lg-block">LEX-ATRIUM </span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
+
+        <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div><!-- End Search Bar -->
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link nav-icon" href="" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+
+                        {% if user.role == "judge" %}
+
+                        {% for umsg in userMsgs %}
+                        {% if umsg.receiver == user.id and umsg.status == "unread" %}
+                        <span class="badge bg-primary badge-number">
+
+                            {{umsg|length}}
+
+                        </span>
+
+                        {% endif %}
+                        {% endfor %}
+
+                        {% else %}
+
+                        {% for msg in msgs %}
+                        {% if msg.case.creator.id == user.id and msg.status == "unread" %}
+                        <span class="badge bg-primary badge-number">
+
+                            {{msg|length}}
+                        </span>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% endif %}
+
+                    </a><!-- End Notification Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+
+                        {% if user.role == "judge" %}
+                        {% for umsg in userMsgs %}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        {% if umsg.receiver == user.id and umsg.status == "unread" %}
+
+                        <li class="notification-item">
+                            <i class="bi bi-exclamation-circle text-warning"></i>
+                            <a href="/message/">
+                                <div>
+                                    <h4>{{umsg.title}}</h4>
+                                    <p>{{umsg.message}}</p>
+                                    <p></p>
+                                </div>
+                            </a>
+                        </li>
+
+
+                        {%endif%}
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        {%endfor%}
+
+                        {% else %}
+                        {% for msg in msgs %}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        {% if msg.case.creator.id == user.id and msg.status == "unread" %}
+
+                        <li class="notification-item">
+                            <i class="bi bi-exclamation-circle text-warning"></i>
+                            <a href="/message/">
+                                <div>
+                                    <h4>{{msg.title}}</h4>
+                                    <p>{{msg.message}}</p>
+                                    <p></p>
+                                </div>
+                            </a>
+                        </li>
+
+
+                        {%endif%}
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        {%endfor%}
+                        {%endif%}
+
+
+                        <!-- <li>
+                        <hr class="dropdown-divider">
+                      </li>
+                      <li class="dropdown-footer">
+                        <a href="#">Show all notifications</a>
+                      </li> -->
+
+                    </ul><!-- End Notification Dropdown Items -->
+
+                </li><!-- End Notification Nav -->
+
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
+                        <i class="bi bi-person"></i>
+                        <!-- <span class="d-none d-md-block dropdown-toggle ps-2">NO.{{user.call_to_bar_number }}</span> -->
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>{{user.first_name}} {{user.last_name}}</h6>
+                            <span>{{user.role}}</span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/logout/">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+
+    </header>
+
+
+
+
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " href="/">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'case_urls:case' %}">
+                    <i class="bi bi-folder"></i>
+                    <span>Cases</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'message_urls:message' %}">
+                    <i class="bi bi-chat"></i>
+                    <span>Message</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'calendar_urls:calendar' %}">
+                    <i class="bi bi-calendar"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <br><br>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/settings/">
+
+                    <i class="bi bi-wrench"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+
+
+        </ul>
+
+    </aside>
+    <!-- End Sidebar-->
+
+
+
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Cases</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item">Case</li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section profile">
+            <div class="row">
+                <div class="col-xl-4">
+
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                            <img src="https://icons.iconarchive.com/icons/custom-icon-design/mono-general-2/512/folder-icon.png"
+                                alt="">
+                            <br>
+                            <div>
+                                {% if user.role == "chief judge"%}
+                                <div>
+                                    <p>
+
+                                        {% if case.status == "not assigned" %}
+                                        Not Assigned
+                                        {% else %}
+                                        Assigned
+                                        {% endif %}
+                                        <span><button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                                data-bs-target="#assign_model" btn-lg btn-block>
+                                                <i class="bi bi-pencil" aria-hidden="true"></i> </button></span>
+                                    </p>
+                                </div>
+                                {% else%}
+                                <div style="font-size: 13px;"> <b>Judge :</b> <span>{{case.judge_assigned}}</span>
+                                </div>
+                                <div style="font-size: 13px;"> <b>Court :</b> <span>{{case.court_assigned}}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <br>
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="col-xl-8">
+
+                    <div class="card">
+                        <div class="card-body pt-3">
+
+                            <span class="badge rounded-pill bg-info">{{case.case_type}} case</span>
+                            <br>
+                            <br>
+
+                            {% if user.role == "lawyer" or user.role == "litigant" %}
+                            {% if case.status == "archived" %}
+
+                            <a name="" id="" class="btn btn-outline-dark" href="{{ case.judgement.url }}"
+                                role="button">download judgement </a>
+
+
+                            <!-- <button type="button" class="btn btn-outline-dark">download judgement</button> -->
+
+
+                            {% else %}
+
+                            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                                data-bs-target="#add_file_model">Add File</button>
+
+                            {% endif %}
+
+                            {% endif %}
+
+
+                            {% if user.role == "judge" %}
+                            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                                data-bs-target="#judgementmodelId">Add Judgement</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                                data-bs-target="#modelHearingId">Court Hearing</button>
+                            {% endif %}
+
+
+
+
+                            <br>
+                            <br>
+                            <!-- Default Accordion -->
+                            {% if casefolder %}
+                            <div class="accordion" id="files">
+                                {% for item in casefolder%}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading{{item.id}}">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse{{item.id}}" aria-expanded="true"
+                                            aria-controls="collapse{{item.id}}">
+                                            {{ item.case_file_name }}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{item.id}}" class="accordion-collapse collapse show"
+                                        aria-labelledby="heading{{item.id}}" data-bs-parent="#files">
+                                        <div class="accordion-body">
+                                            <!-- {{ item.case_file }} -->
+                                            {% if user.role == "litigant" or user.role == "lawyer" %}
+                                            <button type="button" name="" data-bs-toggle="modal" onclick="getID({{item.id}})"
+                                                data-bs-target="#updateModelId" class="btn btn-outline-dark" btn-lg
+                                                btn-block">Update</button>
+                                            <!-- &nbsp;
+                                            <a name="" id="" class="btn btn-outline-danger"
+                                                href="{{ item.case_file.url }}" role="button"> <i class="bi bi-trash"
+                                                    aria-hidden="true"></i> {{item.id}}</a> -->
+                                            &nbsp;
+                                            <a name="" id="" class="btn btn-primary" href="{{ item.case_file.url }}"
+                                                role="button"> view </a>
+
+                                            {% else %}
+                                            <a name="" id="" class="btn btn-primary" href="{{ item.case_file.url }}"
+                                                role="button">Download file</a>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor%}
+                            </div>
+                            {% else %}
+                            {% endif %}
+                            <!-- End Default Accordion Example -->
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+        </section>
+
+
+
+
+        <!-- chief judge to assign judge and or court Modal -->
+        <div class="modal fade" id="assign_model" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Approve case</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form method="post">
+                            {% csrf_token %}
+
+
+                            <div class="mb-3">
+                                <div class="form-group">
+
+                                    <label for="" class="form-label">Select Judge:</label>
+
+
+                                    <select class="form-control" name="judge_id">
+                                        {% for u in userall%}
+
+                                        {% if u.role == "judge" %}
+
+                                        <option value="{{u.id}}">{{u.first_name}} {{u.last_name}} - {{u.court}}</option>
+
+
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+
+
+
+
+                            </div>
+
+
+                            <input name="" id="" class="btn btn-outline-dark" type="submit" value="Approve">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- update file modal  -->
+        <div class="modal fade" id="updateModelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update File</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <input type="hidden" name="isUpdated" value="true">
+                            <input type="text" id="casefolderid" name="caseFolderId" value="">
+
+                            <div class="form-group">
+                                <label class="custom-file">
+                                    <input type="file" name="updated_file" id="" placeholder=""
+                                        class="custom-file-input" aria-describedby="fileHelpId">
+                                    <span class="custom-file-control"></span>
+                                </label>
+                            </div>
+                            <br>
+
+                            <input style="float: right;" class="btn btn-outline-success float-right" type="submit"
+                                value="Update">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <!-- add file Modal -->
+        <div class="modal fade" id="add_file_model" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add File to Case</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="">FileName:</label>
+                                <input type="text" class="form-control" name="filename" id="" aria-describedby="helpId"
+                                    placeholder="">
+                            </div>
+
+                            <br>
+
+                            <div class="form-group">
+                                <label class="custom-file">
+                                    <input type="file" name="xfile" id="" placeholder="" class="custom-file-input"
+                                        aria-describedby="fileHelpId">
+                                    <span class="custom-file-control"></span>
+                                </label>
+                            </div>
+                            <br>
+
+                            <input style="float: right;" class="btn btn-outline-dark float-right" type="submit"
+                                value="Add">
+                        </form>
+                    </div>
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- ADD JUDGMENT Modal -->
+        <div class="modal fade" id="judgementmodelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Judgement</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="custom-file">
+                                    <input type="file" name="judgement_file" id="" placeholder=""
+                                        class="custom-file-input" aria-describedby="fileHelpId">
+                                    <span class="custom-file-control"></span>
+                                </label>
+                            </div>
+                            <br>
+
+                            <input style="float: right;" class="btn btn-outline-dark float-right" type="submit"
+                                value="Add">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Court hearing modal -->
+        <div class="modal fade" id="modelHearingId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Schedule</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="isSchedule" value="true">
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">Schedule</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="schedule" disabled value="Court Hearing"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row mb-3">
+                                <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+                                <div class="col-sm-10">
+                                    <input type="date" name="sdate" class="form-control">
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row mb-3">
+                                <label for="inputTime" class="col-sm-2 col-form-label">Time</label>
+                                <div class="col-sm-10">
+                                    <input type="time" name="stime" class="form-control">
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <br>
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <input name="" id="" class="btn btn-primary" type="submit" value="Schedule"
+                                        style=" float: right; width: 100%;">
+
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>LEX-ATRIUM </span></strong>. All Rights Reserved
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <script src='{% static "vendor/bootstrap/js/bootstrap.bundle.js" %}'></script>
+    <script src='{% static "vendor/jquery/jquery.min.js" %}'></script>
+    <script src='{% static "vendor/select2/select2.min.js"  %}'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+
+
+    <script src='{% static "js/dashboard.js" %}'></script>
+
+
+    <script> 
+        
+        function getID(id) { 
+            var inputF = document.getElementById("casefolderid");
+            inputF.value =  id;
+        }
+        </script>
+
+
+</body>
+
+</html>

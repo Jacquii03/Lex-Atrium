@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Lex Atrium</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <link href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+  <link href='{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}' rel="stylesheet">
+  <link href='{% static "vendor/boxicons/css/boxicons.min.css" %}' rel="stylesheet">
+
+  <link href='{% static "css/dashboard.css"  %}' rel="stylesheet">
+
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="#" class="logo d-flex align-items-center">
+        <span class="d-none d-lg-block">LEX-ATRIUM </span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+
+
+            {% if user.role == "judge" %}
+
+            {% for umsg in userMsgs %}
+            {% if umsg.receiver == user.id and umsg.status == "unread" %}
+            <span class="badge bg-primary badge-number">
+
+              {{umsg|length}}
+
+            </span>
+
+            {% endif %}
+            {% endfor %}
+
+            {% else %}
+
+            {% for msg in msgs %}
+            {% if msg.case.creator.id == user.id and msg.status == "unread" %}
+            <span class="badge bg-primary badge-number">
+
+              {{msg|length}}
+            </span>
+            {% endif %}
+            {% endfor %}
+
+            {% endif %}
+
+
+
+
+
+
+          </a><!-- End Notification Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+ 
+            {% if user.role == "judge" %}
+            {% for umsg in userMsgs %}
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            {% if umsg.receiver == user.id and umsg.status == "unread" %}
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <a href="/message/">
+                <div>
+                  <h4>{{umsg.title}}</h4>
+                  <p>{{umsg.message}}</p>
+                  <p></p>
+                </div>
+              </a>
+            </li>
+
+
+            {%endif%}
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            {%endfor%}
+
+            {% else %}
+            {% for msg in msgs %}
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            {% if msg.case.creator.id == user.id and msg.status == "unread" %}
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <a href="/message/">
+                <div>
+                  <h4>{{msg.title}}</h4>
+                  <p>{{msg.message}}</p>
+                  <p></p>
+                </div>
+              </a>
+            </li>
+
+
+            {%endif%}
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            {%endfor%}
+            {%endif%}
+
+
+            <!-- <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li class="dropdown-footer">
+            <a href="#">Show all notifications</a>
+          </li> -->
+
+          </ul>
+
+        </li><!-- End Notification Nav -->
+
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
+            <i class="bi bi-person"></i>
+            <!-- <span class="d-none d-md-block dropdown-toggle ps-2">NO.{{user.call_to_bar_number }}</span> -->
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{user.first_name}} {{user.last_name}}</h6>
+              <span>{{user.role}}</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/logout/">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+
+
+
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="/">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'case_urls:case' %}">
+          <i class="bi bi-folder"></i>
+          <span>Cases</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'message_urls:message' %}">
+          <i class="bi bi-chat"></i>
+          <span>Message</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'calendar_urls:calendar' %}">
+          <i class="bi bi-calendar"></i>
+          <span>Calendar</span>
+        </a>
+      </li>
+      <br><br>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/settings/">
+
+          <i class="bi bi-wrench"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+
+
+    </ul>
+
+  </aside>
+  <!-- End Sidebar-->
+
+
+
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+
+
+
+    <section class="section dashboard">
+      <!-- chief judge dashboard -->
+      {% if user.role == 'chief judge'%}
+      <div class="col-12">
+        <div class="card recent-sales">
+
+          <div class="filter">
+            <a class="icon" href="#">see all</i></a>
+
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">Case Rack </h5>
+
+            <table class="table table-borderless datatable">
+              <thead>
+                <tr>
+                  <th scope="col">Case No.</th>
+                  <th scope="col">Uploader</th>
+                  <th scope="col">Case Title</th>
+                  <th scope="col">Paid</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if cases %}
+                {% for item in cases%}
+                <tr>
+                  <th scope="row">#{{item.id}}</th>
+                  <td>{{item.creator.first_name}} {{item.creator.last_name}}</td>
+                  <td><a href="/case/{{item.id}}/detail/^" class="text-primary">{{item.name|title}}</a></td>
+                  <td><i class="bi bi-check" aria-hidden="true"></i></td>
+                  {% if item.judge_assigned == "Not assigned" and item.court_assigned == "Not assigned" %}
+                  <td><span class="badge bg-warning">Pending</span></td>
+                  {% else %}
+                  <td><span class="badge bg-success">Approved</span></td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+                {% endif %}
+
+
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+      {% endif %}
+      <!-- End judge dashboard -->
+    </section>
+
+
+
+
+
+
+
+    <!-- Case Card col-xxl-4-->
+    {% if user.role == 'lawyer' or user.role == 'litigant' %}
+    <div class="col-md-12">
+      <div class="card bg-light">
+        <div class="card-body">
+          <h5 class="card-title">Recent Cases <span>| Today</span></h5>
+
+          <div class="d-flex row align-items-center">
+            {% for case in cases%}
+
+            {% if case.creator.id == user.id%}
+            <div class="ps-3 col" style="width: 50%; cursor: pointer;" onclick="goToDetail()">
+
+
+              <a href="/case/{{case.id}}/detail/^">
+
+                <div class="card w-100">
+                  <div class="card-body">
+                    <h4 class="card-title">
+                      <i class="bi bi-folder w-500" style="width: 200%; height: 200%;" aria-hidden="true"></i>
+                    </h4>
+                    <p class="card-text">{{case.name}}</p>
+
+                    {% if case.status == "not assigned" %}
+                    <span class="badge bg-danger">Not Assigned</span>
+                    {% elif case.status == "ongoing" %}
+                    <span class="badge bg-warning">Ongoing</span>
+                    {% else %}
+                    <span class="badge bg-success">Archived</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </a>
+
+            </div>
+
+            {% endif %}
+
+            {% endfor%}
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- End Case Card -->
+
+
+
+
+
+
+
+    <!-- Case Card col-xxl-4-->
+    {% if user.role == 'judge' %}
+    <div class="col-md-12">
+      <div class="card bg-light">
+        <div class="card-body">
+          <h5 class="card-title">Recent Cases <span>| Today</span></h5>
+
+          <div class="d-flex row align-items-center">
+            {% for case in cases%}
+
+            {% if case.judge_assigned_id == user.id %}
+            <div class="ps-3 col" style="width: 50%; cursor: pointer;">
+
+
+              <a href="/case/{{case.id}}/detail/^">
+
+                <div class="card w-100">
+                  <div class="card-body">
+                    <h4 class="card-title">
+                      <i class="bi bi-folder w-500" style="width: 200%; height: 200%;" aria-hidden="true"></i>
+                    </h4>
+                    <p class="card-text">{{case.name}}</p>
+
+                    {% if case.status == "ongoing" %}
+                    <span class="badge bg-warning">Ongoing</span>
+                    {% else %}
+                    <span class="badge bg-success">Archived</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </a>
+
+            </div>
+
+            {% endif %}
+
+            {% endfor%}
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- End Case Card -->
+
+
+
+
+
+
+  </main>
+  <!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>LEX-ATRIUM </span></strong>. All Rights Reserved
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <script src='{% static "vendor/bootstrap/js/bootstrap.bundle.js" %}'></script>
+
+
+  <script src='{% static "js/dashboard.js" %}'></script>
+
+
+</body>
+
+</html>

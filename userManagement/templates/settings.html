@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Lex Atuum</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <link href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}' rel="stylesheet">
+    <link href='{% static "vendor/boxicons/css/boxicons.min.css" %}' rel="stylesheet">
+
+    <link href='{% static "css/dashboard.css"  %}' rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="#" class="logo d-flex align-items-center">
+                <span class="d-none d-lg-block">LEX-ATRIUM </span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
+
+        <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div><!-- End Search Bar -->
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-primary badge-number">4</span>
+                    </a><!-- End Notification Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        <li class="dropdown-header">
+                            You have 4 new notifications
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-exclamation-circle text-warning"></i>
+                            <div>
+                                <h4>Lorem Ipsum</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>30 min. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-x-circle text-danger"></i>
+                            <div>
+                                <h4>Atque rerum nesciunt</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>1 hr. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-check-circle text-success"></i>
+                            <div>
+                                <h4>Sit rerum fuga</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>2 hrs. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-info-circle text-primary"></i>
+                            <div>
+                                <h4>Dicta reprehenderit</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>4 hrs. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li class="dropdown-footer">
+                            <a href="#">Show all notifications</a>
+                        </li>
+
+                    </ul><!-- End Notification Dropdown Items -->
+
+                </li><!-- End Notification Nav -->
+
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
+                        <i class="bi bi-person"></i>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">NO.{{user.call_to_bar_number }}</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>{{user.first_name}} {{user.last_name}}</h6>
+                            <span>{{user.role}}</span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/logout/">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+
+
+
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " href="/">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'case_urls:case' %}">
+                    <i class="bi bi-folder"></i>
+                    <span>Cases</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'message_urls:message' %}">
+                    <i class="bi bi-chat"></i>
+                    <span>Message</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'calendar_urls:calendar' %}">
+                    <i class="bi bi-calendar"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <br><br>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/settings/">
+
+                    <i class="bi bi-wrench"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+
+
+        </ul>
+
+    </aside>
+    <!-- End Sidebar-->
+
+
+
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Settings</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Settings</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+
+
+        <section class="section profile">
+            <div class="row">
+
+                <!-- space -->
+                <div class="col-xl-2">
+                </div>
+
+
+                <div class="col-xl-8">
+                    <div class="card">
+                        <div class="card-body pt-3">
+                            <!-- Bordered Tabs -->
+                            <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab"
+                                        data-bs-target="#profile-overview">Overview</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit
+                                        Profile</button>
+                                </li>
+
+
+
+                                <!-- <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#profile-change-password">Change Password</button>
+                                </li> -->
+
+                            </ul>
+
+                            <div class="tab-content pt-2">
+
+                                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                    <h5 class="card-title">Profile Details</h5>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                        <div class="col-lg-9 col-md-8">{{user.first_name}} {{user.last_name}}</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Role</div>
+                                        <div class="col-lg-9 col-md-8">{{user.role}}</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Call to bar Number</div>
+                                        {% if user.role == "litigant" %}
+                                        <div class="col-lg-9 col-md-8">nill</div>
+                                        {% else %}
+                                        <div class="col-lg-9 col-md-8">{{user.call_to_bar_number}}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Country</div>
+                                        <div class="col-lg-9 col-md-8">Nigeria</div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Court</div>
+                                        <div class="col-lg-9 col-md-8">{{user.court}}</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Phone</div>
+                                        <div class="col-lg-9 col-md-8">nill</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Email</div>
+                                        <div class="col-lg-9 col-md-8">{{user.email}}</div>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                    <!-- Profile Edit Form -->
+                                    <form method="post">
+                                        {% csrf_token %}
+
+                                        <div class="row mb-3">
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full
+                                                Name</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="fullName" type="text" disabled class="form-control"
+                                                    id="fullName" value="{{user.first_name}} {{user.last_name}}">
+                                            </div>
+                                        </div>
+                                   
+
+
+
+                                        <div class="row mb-3">
+                                            <label for="Job" class="col-md-4 col-lg-3 col-form-label">Role</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="job" type="text" disabled class="form-control" id="Job"
+                                                    value="{{user.role}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Country"
+                                                class="col-md-4 col-lg-3 col-form-label">Country</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="country" type="text" disabled class="form-control"
+                                                    id="Country" value="Nigeria">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row mb-3">
+                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="phone" required maxlength="11"  type="tel" class="form-control" id="Phone"
+                                                    value=" ">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="email" type="email" required pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" class="form-control" id="Email"
+                                                    value="{{user.email}}">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-danger">Save Changes</button>
+                                        </div>
+                                    </form>
+                                    
+                                    <!-- End Profile Edit Form -->
+
+                                </div>
+
+                                <div class="tab-pane fade pt-3" id="profile-settings">
+
+                                    <!-- Settings Form -->
+                                    <!-- <form>
+
+                                        <div class="row mb-3">
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email
+                                                Notifications</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="changesMade"
+                                                        checked>
+                                                    <label class="form-check-label" for="changesMade">
+                                                        Changes made to your account
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="newProducts"
+                                                        checked>
+                                                    <label class="form-check-label" for="newProducts">
+                                                        Information on new products and services
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="proOffers">
+                                                    <label class="form-check-label" for="proOffers">
+                                                        Marketing and promo offers
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="securityNotify"
+                                                        checked disabled>
+                                                    <label class="form-check-label" for="securityNotify">
+                                                        Security alerts
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form>End settings Form -->
+
+                                </div>
+
+                                <div class="tab-pane fade pt-3" id="profile-change-password">
+                                    <!-- Change Password Form -->
+                                    <!-- <form>
+
+                                        <div class="row mb-3">
+                                            <label for="currentPassword"
+                                                class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="password" type="password" class="form-control"
+                                                    id="currentPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
+                                                Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="password" type="password" class="form-control"
+                                                    id="newPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter
+                                                New Password</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="password1" type="password" class="form-control"
+                                                    id="renewPassword">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Change Password</button>
+                                        </div>
+                                    </form>End Change Password Form -->
+
+                                </div>
+
+                            </div><!-- End Bordered Tabs -->
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- space -->
+                <div class="col-xl-2">
+
+
+
+                </div>
+
+            </div>
+        </section>
+
+
+
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>LEX-ATRIUM </span></strong>. All Rights Reserved
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <script src='{% static "vendor/bootstrap/js/bootstrap.bundle.js" %}'></script>
+
+
+    <script src='{% static "js/dashboard.js" %}'></script>
+
+
+</body>
+
+</html>

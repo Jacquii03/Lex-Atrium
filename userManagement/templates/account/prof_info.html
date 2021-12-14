@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Lex Atrium | register</title>
+
+    <link href="{% static 'vendor/mdi-font/css/material-design-iconic-font.min.css'  %}" rel="stylesheet" media="all">
+    <link href='{% static "vendor/font-awesome-4.7/css/font-awesome.min.css" %}' rel="stylesheet" media="all">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+        rel="stylesheet">
+
+    <link href='{% static "vendor/select2/select2.min.css" %}' rel="stylesheet" media="all">
+
+    <link href="{%  static  'css/main.css' %}" rel="stylesheet" media="all">
+</head>
+
+<body>
+    <div class="page-wrapper bg-blue p-t-100 p-b-100 font-robo" style="background-repeat: no-repeat; background-size: 100% 100%;background-image: url('https://media.istockphoto.com/photos/gavel-divorce-law-books-and-wedding-rings-picture-id481575620?k=6&m=481575620&s=170667a&w=0&h=d6FzPLh-ZXAG3XzoFWu2Kh32ur_U9-uH2ooo4q_z5IA=');">
+        <div class="wrapper wrapper--w680" style="width:100%;">
+            <div class="card card-1">
+                <div class="card-body">
+                    <h3 class="title">Complete Registration</h3>
+                    <form method="POST">
+                        {%csrf_token%}
+                        <div class="input-group">
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select  id="role" name="role">
+                                    <option disabled="disabled" selected="selected">Role</option>
+                                    <option value="chief judge">Chief Judge</option>
+                                    <option value="lawyer">Lawyer</option>
+                                    <option value="judge">Judge</option>
+                                    <option value="litigant">Litigant</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                        <div id="ctbn" class="input-group">
+                            <input  class="input--style-1" type="text" placeholder="Call To Bar Number"
+                                name="call_to_bar_number">
+                        </div>
+
+                        <div id="court" class="input-group">
+                            <input  class="input--style-1" type="text" placeholder="Enter court assigned" name="court">
+                        </div>
+
+                        <div class="p-t-20 w-100">
+                            <button style="width:100%; background-color: red;" class="btn btn--radius btn--green"
+                                type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src='{% static "vendor/jquery/jquery.min.js" %}'></script>
+    <script src='{% static "vendor/select2/select2.min.js"  %}'></script>
+
+    <script src='{% static "js/global.js" %}'></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#court').hide();
+
+            $('#role').on('change', function () {
+                var role = this.value;
+                if (role == "litigant") {
+                    $('#ctbn').hide()
+                    $('#court').hide()
+
+                } else if (role == "judge") {
+                    $('#court').show()
+                    $('#ctbn').show()
+
+                } else {
+                    $('#ctbn').show()
+                }
+
+
+
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

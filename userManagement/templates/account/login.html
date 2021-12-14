@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+{% load static %}
+{% load socialaccount %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Lex Atrium | login</title>
+
+    <link href="{% static 'vendor/mdi-font/css/material-design-iconic-font.min.css'  %}" rel="stylesheet" media="all">
+    <link href='{% static "vendor/font-awesome-4.7/css/font-awesome.min.css" %}' rel="stylesheet" media="all">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+        rel="stylesheet">
+
+    <link href='{% static "vendor/select2/select2.min.css" %}' rel="stylesheet" media="all">
+    <link href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href="{%  static  'css/main.css' %}" rel="stylesheet" media="all">
+</head>
+
+<body>
+
+
+    <div class="page-wrapper bg-blue p-t-100 p-b-100 font-robo" style="background-repeat: no-repeat; background-size: 100% 100%;background-image: url('https://media.istockphoto.com/photos/gavel-divorce-law-books-and-wedding-rings-picture-id481575620?k=6&m=481575620&s=170667a&w=0&h=d6FzPLh-ZXAG3XzoFWu2Kh32ur_U9-uH2ooo4q_z5IA=');">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-1">
+
+                <div class="card-body">
+                    {% if error%}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <strong>{{error}}!!</strong>
+                    </div>
+                    {% endif %}
+
+                    <div>
+                        <h2 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Sign in to
+                            Lex Atrium</h2>
+                        <p
+                            style=" font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; padding-top: 8px; color: rgb(158, 158, 158);">
+                            A Case filing and Productivity application for Courts</p>
+                    </div>
+                    <form method="POST">
+                        {%csrf_token%}
+
+
+                        <div class="input-group">
+                            <input required pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" class="input--style-1"
+                                type="email" placeholder="E-mail address" name="email">
+                        </div>
+
+
+                        <div class="input-group">
+                            <input required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
+                                class="input--style-1" id="pword" type="password" placeholder="Password"
+                                name="password">
+                            <small id="passwordHelpId" class="form-text text-muted"
+                                style="position: absolute; top: 100%; padding-top: 10px;">password must contain
+                                special character | number| upper case letter | lower case letter
+                            </small>
+
+                            <div class="form-check" style="position: absolute; top: 230%;">
+                                <label class="form-check-label">
+                                    <input type="checkbox" onclick="showPassword()" class="form-check-input" name=""
+                                        id="" value="checkedValue">
+                                    show password
+                                </label>
+                            </div>
+
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+
+
+                        <div class="row row-space">
+                            <div class="col">
+                                <button style="width: 100%;" class="btn btn--radius btn--green" type="submit">Login
+                                    now</button>
+                            </div>
+
+                            <div class="col-1">
+                                <p>| |</p>
+                            </div>
+
+                            <div class="col">
+                                <a style="width: 100%;" id="" class="btn btn-danger"
+                                    href='{% provider_login_url "google" %}' role="button"> <i class="fa fa-google"
+                                        aria-hidden="true"></i> Google </a>
+                            </div>
+                        </div>
+
+                        <br>
+                        <!-- <a href="/forgot^email/"> Forgot Password
+                        </a> -->
+                        <p>Don't have an account <a href="/accounts/signup/">create account</a></p>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src='{% static "vendor/jquery/jquery.min.js" %}'></script>
+    <script src='{% static "vendor/select2/select2.min.js"  %}'></script>
+    <script src='{% static "vendor/bootstrap/js/bootstrap.bundle.js" %}'></script>
+
+    <script src='{% static "js/global.js" %}'></script>
+
+    <script>
+        function showPassword() {
+            var x = document.getElementById("pword");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>

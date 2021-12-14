@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Lex Atrium</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <link href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}' rel="stylesheet">
+    <link href='{% static "vendor/boxicons/css/boxicons.min.css" %}' rel="stylesheet">
+    x
+    <link href='{% static "css/dashboard.css"  %}' rel="stylesheet">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="#" class="logo d-flex align-items-center">
+                <span class="d-none d-lg-block">LEX-ATRIUM </span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
+
+        <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div><!-- End Search Bar -->
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link nav-icon" href="" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        {% if user.role == "judge" %}
+
+                        {% for umsg in userMsgs %}
+                        {% if umsg.receiver == user.id and umsg.status == "unread" %}
+                        <span class="badge bg-primary badge-number">
+            
+                          {{umsg|length}}
+            
+                        </span>
+            
+                        {% endif %}
+                        {% endfor %}
+            
+                        {% else %}
+            
+                        {% for msg in msgs %}
+                        {% if msg.case.creator.id == user.id and msg.status == "unread" %}
+                        <span class="badge bg-primary badge-number">
+            
+                          {{msg |length}}
+                        </span>
+                        {% endif %}
+                        {% endfor %}
+            
+                        {% endif %}
+
+                    </a><!-- End Notification Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+ 
+                        {% if user.role == "judge" %}
+                        {% for umsg in userMsgs %}
+                        <li>
+                          <hr class="dropdown-divider">
+                        </li>
+            
+                        {% if umsg.receiver == user.id and umsg.status == "unread" %}
+            
+                        <li class="notification-item">
+                          <i class="bi bi-exclamation-circle text-warning"></i>
+                          <a href="/message/">
+                            <div>
+                              <h4>{{umsg.title}}</h4>
+                              <p>{{umsg.message}}</p>
+                              <p></p>
+                            </div>
+                          </a>
+                        </li>
+            
+            
+                        {%endif%}
+            
+                        <li>
+                          <hr class="dropdown-divider">
+                        </li>
+                        {%endfor%}
+            
+                        {% else %}
+                        {% for msg in msgs %}
+                        <li>
+                          <hr class="dropdown-divider">
+                        </li>
+            
+                        {% if msg.case.creator.id == user.id and msg.status == "unread" %}
+            
+                        <li class="notification-item">
+                          <i class="bi bi-exclamation-circle text-warning"></i>
+                          <a href="/message/">
+                            <div>
+                              <h4>{{msg.title}}</h4>
+                              <p>{{msg.message}}</p>
+                              <p></p>
+                            </div>
+                          </a>
+                        </li>
+            
+            
+                        {%endif%}
+            
+                        <li>
+                          <hr class="dropdown-divider">
+                        </li>
+                        {%endfor%}
+                        {%endif%}
+            
+            
+                        <!-- <li>
+                        <hr class="dropdown-divider">
+                      </li>
+                      <li class="dropdown-footer">
+                        <a href="#">Show all notifications</a>
+                      </li> -->
+            
+                      </ul><!-- End Notification Dropdown Items -->
+
+                </li><!-- End Notification Nav -->
+
+
+
+
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-person"></i>
+                        <!-- <span class="d-none d-md-block dropdown-toggle ps-2">NO.{{user.call_to_bar_number }}</span> -->
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>{{user.first_name}} {{user.last_name}}</h6>
+                            <span>{{user.role}}</span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/logout/">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+
+
+
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " href="/">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'case_urls:case' %}">
+                    <i class="bi bi-folder"></i>
+                    <span>Cases</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'message_urls:message' %}">
+                    <i class="bi bi-chat"></i>
+                    <span>Message</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'calendar_urls:calendar' %}">
+                    <i class="bi bi-calendar"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <br><br>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/settings/">
+
+                    <i class="bi bi-wrench"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+
+
+        </ul>
+
+    </aside>
+    <!-- End Sidebar-->
+
+
+
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Case</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Case</li>
+                </ol>
+            </nav>
+        </div>
+
+
+
+
+
+
+
+        <div class="col-md-12">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">All Cases
+                        {{user.role}}
+                        {% if user.role == "litigant" or user.role == "lawyer" %}
+                        <span>| <a name="" id="" class="btn btn-outline-primary" href="{% url 'case_urls:new_case' %}"
+                                role="button">New Case</a></span>
+                        {% endif %}
+
+                    </h5>
+
+
+
+                    {% if cases %}
+                    <div class="row">
+                        {% for case in cases %}
+                        <div class=" col-6 " style="width: 100%;">
+                            <a href="{{case.id}}/detail/^">
+                                <div class="card"> 
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <i class="bi bi-folder w-100" style="width: 200%; height: 200%;"
+                                                aria-hidden="true"></i>
+
+                                        </h4>
+                                        <p class="card-text">{{case.name}}</p>
+                                        {% if case.status == "not assigned" %}
+                                        <span class="badge bg-danger">Not Assigned</span>
+                                        {% elif case.status == "ongoing" %}
+                                        <span class="badge bg-warning">Ongoing</span>
+                                        {% else %}
+                                        <span class="badge bg-success">Archived</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+
+                    {% else %}
+                    <div class="m-auto ">
+                        <p>No Cases have been created</p>
+                    </div>
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>LEX-ATRIUM </span></strong>. All Rights Reserved
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <script src='{% static "vendor/bootstrap/js/bootstrap.bundle.js" %}'></script>
+    <script src='{% static "vendor/jquery/jquery.min.js" %}'></script>
+    <script src='{% static "vendor/select2/select2.min.js"  %}'></script>
+
+    <script src='{% static "js/global.js" %}'></script>
+
+    <script src='{% static "js/dashboard.js" %}'></script>
+
+
+
+
+</body>
+
+</html>

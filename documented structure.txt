@@ -1,0 +1,77 @@
+Lex-Atrium's  Code Structure
+
+Django separates different aspects (using the Model-View-Controller design pattern)of the code into applications that have all the files necessary to standalone.ggg
+
+
+
+
+
+
+DjangoFile(src)(Contains everything needed to run the application)
+  |
+  |
+  |
+  |_ _ _|Media folder(Contains all the images stored in the database)
+  |	   |_ _ _ img.jpg
+  |
+  |
+  |
+  |_ _ _ db.sqlite3(Database file where read and writes happen e.g data is stored)
+  |
+  |
+  |_ _ _ _requirements.txt(contains all the plugins and dependencies used in the project)
+  |
+  |
+  |
+  |_ _ _ _ runtime.txt(contains the python version to run on heroku when hosted)
+  |
+  |
+  |_ _ _ _Procfile(contains the gunicorn server used by Heroku to run the project when hosted)
+  |
+  |
+  |
+  |_ _ _ _ _|Backend Main Folder(All apps and codes are ran through this folder)
+  |	       |
+  |	       |
+  |	       |_ _ _ _ Settings.py(has all the default settings for the application e.g Secret_keys,password hashers)
+  |	       |
+  |	       |
+  |	       |_ _ _ _ Urls.py(The main url for all urls in the application)
+  |	       |
+  |	       |
+  |	       |_ _ _ _Wsgi.py(The webserver setup with the settings.py files)	       
+  |	       |
+  |	       
+  |
+  |
+  |
+  |
+  |
+  | 
+  |
+  |_ _ |App folder(e.g userManagement, caseManagement)	
+	|
+	|
+	|_ _ _ _ Templates (Views for the frontend e.g html files)
+	|
+	|
+	|_ _ _ _ Models.py (Database file has all the Entities represented as classes and attributes represented as viariablese.g Entities, attributes and fields)	
+	|
+	|
+	|_ _ _ _Views.py (Controller file e.g classes and methods that return the templates and communicate to the database)
+	|
+	|
+	|_ _ _ _ Urls.py(Contains all the url routes linked to the views.py )
+	|
+	|
+	|_ _ _ _|Migration folder(contains all the transformed models.py classes to sql queries)
+	|	   |
+	|	   |_ _ _ 0001_inital(the first migrations)
+    	|	   |
+	|	   |_ _ _0002_update_date(update a reference in the  database)
+	|	   |
+   	|	   |
+	|
+	|
+	|_ _ _ _Admin.py(registers the database fields to be displayed in django's database ui)
+	|
