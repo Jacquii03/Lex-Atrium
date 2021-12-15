@@ -89,24 +89,15 @@ WSGI_APPLICATION = 'lex.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd8ok3oggmvnr8p',
-        'USER':'zcerbfveehujwg',
-        'PASSWORD': 'a4ddf8bfd7397f35c7bd5589bd75a6d2b9da8e77b69031085ed14450deb5a4aa',
-        'HOST':'ec2-23-22-243-103.compute-1.amazonaws.com',
-        'PORT':'5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+
 
 
 # Password validation
@@ -188,12 +179,7 @@ SITE_ID = 2
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# https://myaccount.google.com/lesssecureapps
-# EMAIL_HOST='smtp.mailgun.org'
-# EMAIL_PORT='465'
-# EMAIL_HOST_USER='postmaster@sandbox90905db914774830a64890780f9c0914.mailgun.org'
-# EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
-# EMAIL_USE_SSL=True
+
 
 
 

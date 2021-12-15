@@ -75,7 +75,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 
-class ForgotPassword(models.Model):
-    email = models.EmailField(_('email address'), unique=True, null=False, blank=False)
-    token = models.IntegerField()
+
 
